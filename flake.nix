@@ -21,6 +21,8 @@
           packages = (with pkgs; [
             gnumake
             gcc
+            gdb
+            lldb
             clang-tools_17
             git
           ]);
