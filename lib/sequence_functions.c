@@ -5,6 +5,11 @@
 int letter_size;
 int letter_deleter;
 
+struct dnaSequence {
+	int max_length;
+};
+	
+
 char *strrev(char *str)
 {
       char *p1, *p2;
