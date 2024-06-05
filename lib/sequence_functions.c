@@ -139,21 +139,6 @@ void output_dna_sequence(DNASequence* dna_sequence, int binary) {
     }
 }
 
-char *strrev(char *str)
-{
-      char *p1, *p2;
-
-      if (! str || ! *str)
-            return str;
-      for (p1 = str, p2 = str + strlen(str) - 1; p2 > p1; ++p1, --p2)
-      {
-            *p1 ^= *p2;
-            *p2 ^= *p1;
-            *p1 ^= *p2;
-      }
-      return str;
-}
-
 /// @brief Compares two sequences and checks whether a series can be created from them. The order of given arguments matters.
 /// @param seq1 First sequence to compare.
 /// @param seq2 Second sequence to compare.
