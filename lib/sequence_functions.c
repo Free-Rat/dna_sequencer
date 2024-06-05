@@ -5,13 +5,45 @@
 int letter_size;
 int letter_deleter;
 
-struct DNASequence {
+typedef struct DNASequence {
     int** sequences;
     int from;
     int to;
 	int max_length;
-};
+}DNASequence;
 
+// implementation of quicksort algorithm for sorting the population
+void swap(DNASequence* a, DNASequence* b) {
+	DNASequence temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
+int partition(DNASequence* population[], int low, int high) {
+	int pivot = population[high]->max_length;
+	int i = low - 1;
+	for (int j = low; j <= high - 1; j++) {
+		if (population[j]->max_length > pivot) {
+			i++;
+			swap(population[i], population[j]);
+		}
+	}
+	swap(population[i + 1], population[high]);
+	return i + 1;
+}
+
+void quicksort(DNASequence* population[], int low, int high) {
+	if (low < high) {
+		int pi = partition(population, low, high);
+		quicksort(population, low, pi - 1);
+		quicksort(population, pi + 1, high);
+	}
+}
+
+DNASequence** sort_population(DNASequence* population[]) {
+	quicksort(population, 0, POPULATION_SIZE - 1);
+	return population;
+}
 
 char *strrev(char *str)
 {
