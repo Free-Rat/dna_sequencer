@@ -5,28 +5,12 @@
 int letter_size;
 int letter_deleter;
 
-struct DNASequence {
+typedef struct DNASequence {
     int** sequences;
-    int from;
-    int to;
+    int* from;
+    int* to;
 	int max_length;
-};
-
-
-char *strrev(char *str)
-{
-      char *p1, *p2;
-
-      if (! str || ! *str)
-            return str;
-      for (p1 = str, p2 = str + strlen(str) - 1; p2 > p1; ++p1, --p2)
-      {
-            *p1 ^= *p2;
-            *p2 ^= *p1;
-            *p1 ^= *p2;
-      }
-      return str;
-}
+} DNASequence;
 
 int get_sequence_number(char letter) {
     switch (letter) {
@@ -60,14 +44,6 @@ char get_sequence_letter(int coded_letter) {
     return -1;
 }
 
-/// @brief Compares two sequences and checks whether a series can be created from them. The order of given arguments matters.
-/// @param seq1 First sequence to compare.
-/// @param seq2 Second sequence to compare.
-/// @return 0 if a series can be created from the sequences, 1 otherwise.
-int compare_sequences(int seq1, int seq2) {
-    return (seq1 & letter_deleter) == (seq2 >> SEQ_SIZE);
-}
-
 char* convert_sequence_to_string(int sequence) {
     char* string = malloc(STRING_SIZE * sizeof(char));
 
@@ -80,4 +56,60 @@ char* convert_sequence_to_string(int sequence) {
     string[i] = '\0';
     strrev(string);
     return string;
+}
+
+void init_dna_sequences(DNASequence* dna_sequence, int* data) {
+    dna_sequence->sequences = malloc(DATA_SIZE * sizeof(int*));
+    dna_sequence->from = NULL;
+    dna_sequence->to = NULL;
+    dna_sequence->max_length = 0;
+
+    for (int i = 0; i < DATA_SIZE; i++) {
+        dna_sequence->sequences[i] = &data[i];
+    }
+}
+
+DNASequence** create_population(int* data) {
+    DNASequence* population = malloc(POPULATION_SIZE * sizeof(DNASequence));
+    DNASequence** population_ptr = malloc(POPULATION_SIZE * sizeof(DNASequence*));
+    for (int i = 0; i < POPULATION_SIZE; i++) {
+        population_ptr[i] = &population[i];
+        init_dna_sequences(population_ptr[i], data);
+    }
+
+    return population_ptr;
+}
+
+void output_dna_sequence(DNASequence* dna_sequence, int binary) {
+    for (int i = 0; i < DATA_SIZE; i++) {
+        if (binary) {
+            printf("%d\n", *dna_sequence->sequences[i]);
+        }
+        else {
+            printf("%s\n", convert_sequence_to_string(*dna_sequence->sequences[i]));
+        }
+    }
+}
+
+char *strrev(char *str)
+{
+      char *p1, *p2;
+
+      if (! str || ! *str)
+            return str;
+      for (p1 = str, p2 = str + strlen(str) - 1; p2 > p1; ++p1, --p2)
+      {
+            *p1 ^= *p2;
+            *p2 ^= *p1;
+            *p1 ^= *p2;
+      }
+      return str;
+}
+
+/// @brief Compares two sequences and checks whether a series can be created from them. The order of given arguments matters.
+/// @param seq1 First sequence to compare.
+/// @param seq2 Second sequence to compare.
+/// @return 0 if a series can be created from the sequences, 1 otherwise.
+int compare_sequences(int seq1, int seq2) {
+    return (seq1 & letter_deleter) == (seq2 >> SEQ_SIZE);
 }
