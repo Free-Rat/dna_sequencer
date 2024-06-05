@@ -3,7 +3,7 @@
 #define NEGATIVE_ERRORS 40
 #define POSITIVE_ERRORS 0
 #define DATA_SIZE 160
-#define FILE_SOURCE "9.200-40"
+#define FILE_SOURCE "../res/9.200-40test"
 
 #define SEQ_A 0
 #define SEQ_C 1

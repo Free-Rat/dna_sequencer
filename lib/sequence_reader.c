@@ -1,5 +1,7 @@
-#include "globals.h"
 #include <stdio.h>
+
+#include "globals.h"
+#include "sequence_functions.c"
 
 int get_sequence_number(char letter) {
     switch (letter) {
@@ -17,6 +19,19 @@ int get_sequence_number(char letter) {
     return -1;
 }
 
+void set_letter_deleter() {
+    int deleter = 0;
+    for (int i = 0; i < SEQ_SIZE; i++) {
+        deleter <<= 1;
+        deleter |= 1;
+    }
+
+    letter_deleter = ~(deleter << SEQ_SIZE * (CHAIN - 1));
+}
+
+/// @brief Reads all the sequences from the specifed file, encodes them in binary and stores them in an array.
+/// @param filename File from which to read the sequences.
+/// @return An array of integers, each representing a sequence in binary.
 int* read_sequence(char *filename) {
     FILE *file;
     file = fopen(filename, "r");
@@ -38,5 +53,6 @@ int* read_sequence(char *filename) {
     }
 
     fclose(file);
+    set_letter_deleter();
     return data;
 }

@@ -7,9 +7,8 @@
 
 int main() {
     int* data = read_sequence(FILE_SOURCE);
-	for (int i = 0; i < DATA_SIZE; i++) {
-        printf("%d\n", data[i]);
-    }
+
+    printf("%d\n", compare_sequences(data[0], data[1]));
 
     free(data);
     return 0;
