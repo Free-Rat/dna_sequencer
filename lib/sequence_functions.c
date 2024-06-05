@@ -5,10 +5,13 @@
 int letter_size;
 int letter_deleter;
 
-struct dnaSequence {
+struct DNASequence {
+    int** sequences;
+    int from;
+    int to;
 	int max_length;
 };
-	
+
 
 char *strrev(char *str)
 {
