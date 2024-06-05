@@ -5,6 +5,8 @@
 int letter_size;
 int letter_deleter;
 
+int* removed_sequences = NULL;
+
 typedef struct DNASequence {
     int** sequences;
     int* from;
@@ -126,6 +128,61 @@ DNASequence** create_population(int* data) {
     }
 
     return population_ptr;
+}
+
+int* copy_array(int* data, int new_size) {
+    int* new_data = malloc(new_size * sizeof(int));
+    for (int i = 0; i < DATA_SIZE; i++) {
+        new_data[i] = data[i];
+    }
+
+    return new_data;
+}
+
+int generate_random_sequence() {
+    int max_seq_val = (1 << CHAIN * SEQ_SIZE) - 1;
+    return rand() % max_seq_val;
+}
+
+void randomize_sequence(int** data) {
+
+}
+
+void insert_seq(int* data, int index) {
+    int inserted = 0;
+    int generated_seq;
+    while (!inserted) {
+        generated_seq = generate_random_sequence();
+        inserted = 1;
+        for (int i = 0; i < DATA_SIZE; i++) {
+            if (generated_seq == data[i]) {
+                inserted = 0;
+                break;
+            }
+        }
+    }
+
+    data[index] = generated_seq;
+}
+
+int* prepare_data(int* data) {
+    int* new_data;
+    if (NEGATIVE_ERRORS > 0) {
+        new_data = copy_array(data, PERFECT_SEQUENCE);
+        for (int i = DATA_SIZE; i < PERFECT_SEQUENCE; i++) {
+            insert_seq(new_data, i);
+        }
+    }
+    else if (POSITIVE_ERRORS > 0) {
+        randomize_sequence(&data);
+        new_data = copy_array(data, PERFECT_SEQUENCE);
+        removed_sequences = copy_array(&data[PERFECT_SEQUENCE], POSITIVE_ERRORS);
+    }
+    else {
+        new_data = copy_array(data, DATA_SIZE);
+    }
+
+    return new_data;
 }
 
 void output_dna_sequence(DNASequence* dna_sequence, int binary) {

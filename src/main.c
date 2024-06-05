@@ -1,12 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "../lib/globals.h"
 #include "../lib/sequence_reader.c"
 
 int main() {
+    srand(time(NULL));
+
     int* original_data = read_sequence(FILE_SOURCE);
+    int* prepared_data = prepare_data(original_data);
 
     //printf("%d\n", compare_sequences(data[0], data[1]));
 
@@ -15,10 +19,12 @@ int main() {
     //}
 
     DNASequence** population = create_population(original_data);
-    for (int i = 0; i < POPULATION_SIZE; i++) {
-        output_dna_sequence(population[i], 0);
-    }
-    
+    sort_population(population);
+    //for (int i = 0; i < POPULATION_SIZE; i++) {
+    //    output_dna_sequence(population[i], 0);
+    //}
+
+
     free(original_data);
     return 0;
 }
