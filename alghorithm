@@ -1,0 +1,21 @@
+Dostajemy na wejściu długość słowa l, długość sekwencji n. Indeksujemy każdy element w liście (w praktyce będziemy odnosić się do elementów po referencji, nie będziemy kopiować wartości)
+
+
+
+Tworzymy p list, gdzie każda z nich jest losowo posortowaną listą wejściową. Tak powstaje generacja 0.
+
+Ustalamy jakość każdej listy. Robimy to patrząc jak długą sekwencję uda nam się z niej stworzyć.
+
+Sortujemy listy według najlepszej jakości
+
+e najlepszych list przechodzi bez zmian do następnej generacji.
+
+Reszta list przechodzi przez rekombinację, w której bierzemy dwie listy znajdujące się obok siebie i mieszamy je ze sobą biorąc poszczególne elementy "w kratkę", to znaczy raz bierzemy element z pierwszej listy, a kolejny z drugiej i tak aż do momentu jak wypełnimy listę i elementami.
+
+Po takiej rekombinacji musimy sprawdzić czy lista nie posiada elementów o tym samym indeksie (nie mogą pojawić się np. indeksy 0, 0, 1, ...). Jeśli pojawią się duplikaty, to trzeba ten element zamienić na indeks, którego jeszcze w tej liście nie było.
+
+Ostatnim krokiem jest przeprowadzenie mutacji, w której przechodzimy przez pierwsze e najlepszych list i w nich zamieniamy ostatnie słowo, które nie tworzyło już sekwencji, z innym losowym słowem, które też nie tworzy sekwencji. Dla reszty list zamieniamy miejscami dwa losowe słowa.
+
+Tak powstaje kolejna generacja. Jeśli jest to numer generacji mniejszy niż g to przechodzimy do pkt. 2.
+
+Sortujemy listy według najlepszej jakości. Odczytujemy sekwencję z najlepszej listy i kończymy algorytm.
