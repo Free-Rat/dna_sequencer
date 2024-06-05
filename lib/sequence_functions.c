@@ -12,6 +12,54 @@ typedef struct DNASequence {
 	int max_length;
 } DNASequence;
 
+// implementation of quicksort algorithm for sorting the population
+void swap(DNASequence* a, DNASequence* b) {
+	DNASequence temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
+int partition(DNASequence* population[], int low, int high) {
+	int pivot = population[high]->max_length;
+	int i = low - 1;
+	for (int j = low; j <= high - 1; j++) {
+		if (population[j]->max_length > pivot) {
+			i++;
+			swap(population[i], population[j]);
+		}
+	}
+	swap(population[i + 1], population[high]);
+	return i + 1;
+}
+
+void quicksort(DNASequence* population[], int low, int high) {
+	if (low < high) {
+		int pi = partition(population, low, high);
+		quicksort(population, low, pi - 1);
+		quicksort(population, pi + 1, high);
+	}
+}
+
+DNASequence** sort_population(DNASequence* population[]) {
+	quicksort(population, 0, POPULATION_SIZE - 1);
+	return population;
+}
+
+char *strrev(char *str)
+{
+      char *p1, *p2;
+
+      if (! str || ! *str)
+            return str;
+      for (p1 = str, p2 = str + strlen(str) - 1; p2 > p1; ++p1, --p2)
+      {
+            *p1 ^= *p2;
+            *p2 ^= *p1;
+            *p1 ^= *p2;
+      }
+      return str;
+}
+
 int get_sequence_number(char letter) {
     switch (letter) {
         case 'A':
