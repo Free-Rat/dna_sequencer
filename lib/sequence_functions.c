@@ -13,8 +13,8 @@ typedef struct DNASequence {
 } DNASequence;
 
 // implementation of quicksort algorithm for sorting the population
-void swap(DNASequence* a, DNASequence* b) {
-	DNASequence temp = *a;
+void swap(DNASequence** a, DNASequence** b) {
+	DNASequence* temp = *a;
 	*a = *b;
 	*b = temp;
 }
@@ -25,10 +25,10 @@ int partition(DNASequence* population[], int low, int high) {
 	for (int j = low; j <= high - 1; j++) {
 		if (population[j]->max_length > pivot) {
 			i++;
-			swap(population[i], population[j]);
+			swap(&population[i], &population[j]);
 		}
 	}
-	swap(population[i + 1], population[high]);
+	swap(&population[i + 1], &population[high]);
 	return i + 1;
 }
 
