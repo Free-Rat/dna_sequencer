@@ -8,7 +8,11 @@
 int main() {
     int* data = read_sequence(FILE_SOURCE);
 
-    printf("%d\n", compare_sequences(data[0], data[1]));
+    //printf("%d\n", compare_sequences(data[0], data[1]));
+
+    for (int i = 0; i < DATA_SIZE; i++) {
+        printf("%s\n", convert_sequence_to_string(data[i]));
+    }
 
     free(data);
     return 0;

@@ -3,22 +3,6 @@
 #include "globals.h"
 #include "sequence_functions.c"
 
-int get_sequence_number(char letter) {
-    switch (letter) {
-        case 'A':
-            return SEQ_A;
-        case 'C':
-            return SEQ_C;
-        case 'G':
-            return SEQ_G;
-        case 'T':
-            return SEQ_T;
-    }
-
-    exit(NON_SEQ_LETTER);
-    return -1;
-}
-
 void set_letter_deleter() {
     int deleter = 0;
     for (int i = 0; i < SEQ_SIZE; i++) {
@@ -27,6 +11,7 @@ void set_letter_deleter() {
     }
 
     letter_deleter = ~(deleter << SEQ_SIZE * (CHAIN - 1));
+    letter_size = deleter;
 }
 
 /// @brief Reads all the sequences from the specifed file, encodes them in binary and stores them in an array.
