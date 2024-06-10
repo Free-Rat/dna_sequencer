@@ -2,23 +2,40 @@
 
 #include "globals.h"
 
-int letter_size;
-int letter_deleter;
+/// @brief With bitwise AND can delete the youngest bits of a sequence.
+int young_letter_deleter;
+
+/// @brief With bitwise AND can delete the oldest bits of a sequence.
+int old_letter_deleter;
 
 int* removed_sequences = NULL;
 
 typedef struct DNASequence {
     int** sequences;
-    int* from;
-    int* to;
+    int from;
+    int to;
 	int max_length;
 } DNASequence;
+
+/// @brief Compares two sequences and checks whether a series can be created from them. The order of given arguments matters.
+/// @param seq1 First sequence to compare.
+/// @param seq2 Second sequence to compare.
+/// @return 0 if a series can be created from the sequences, 1 otherwise.
+int compare_sequences(int seq1, int seq2) {
+    return (seq1 & old_letter_deleter) == (seq2 >> SEQ_SIZE);
+}
 
 // implementation of quicksort algorithm for sorting the population
 void swap(DNASequence** a, DNASequence** b) {
 	DNASequence* temp = *a;
 	*a = *b;
 	*b = temp;
+}
+
+void swap_int(int** a, int** b) {
+    int* temp = *a;
+    *a = *b;
+    *b = temp;
 }
 
 int partition(DNASequence* population[], int low, int high) {
@@ -99,7 +116,7 @@ char* convert_sequence_to_string(int sequence) {
 
     int i;
     for (i = 0; i < CHAIN; i++) {
-        string[i] = get_sequence_letter(sequence & letter_size);
+        string[i] = get_sequence_letter(sequence & young_letter_deleter);
         sequence >>= SEQ_SIZE;
     }
 
@@ -109,14 +126,69 @@ char* convert_sequence_to_string(int sequence) {
 }
 
 void init_dna_sequences(DNASequence* dna_sequence, int* data) {
-    dna_sequence->sequences = malloc(DATA_SIZE * sizeof(int*));
-    dna_sequence->from = NULL;
-    dna_sequence->to = NULL;
+    dna_sequence->sequences = malloc(PERFECT_SEQUENCE * sizeof(int*));
+    dna_sequence->from = 0;
+    dna_sequence->to = 0;
     dna_sequence->max_length = 0;
 
-    for (int i = 0; i < DATA_SIZE; i++) {
+    for (int i = 0; i < PERFECT_SEQUENCE; i++) {
         dna_sequence->sequences[i] = &data[i];
     }
+}
+
+int normalize_index(int i) {
+    if (i < 0) {
+        return 0;
+    }
+    else if (i >= PERFECT_SEQUENCE) {
+        return PERFECT_SEQUENCE - 1;
+    }
+
+    return i;
+}
+
+void randomize_list(DNASequence* population) {
+    for (int i = 0; i < PERFECT_SEQUENCE; i++) {
+        if (rand() % 2) {
+            int move = rand() % (PERFECT_SEQUENCE * 2) - PERFECT_SEQUENCE;
+            int index = normalize_index(i + move);
+            swap_int(&population->sequences[i], &population->sequences[index]);
+        }
+    }
+}
+
+void find_max_length_in_sequence(DNASequence* dna_sequence) {
+    int length = 0;
+    int max_length = 0;
+
+
+    int potential_from = 0;
+    int from = 0;
+    int to = 0;
+    int i;
+    for (i = 0; i < PERFECT_SEQUENCE; i++) {
+        if (i == 0 || compare_sequences(*dna_sequence->sequences[i], *dna_sequence->sequences[i - 1])) {
+            length++;
+        }
+        else {
+            if (length > max_length) {
+                max_length = length;
+                from = potential_from;
+                to = i;
+            }
+            potential_from = i + 1;
+            length = 1;
+        }
+    }
+
+    if (length > max_length) {
+        max_length = length;
+        to = i - 1;
+    }
+
+    dna_sequence->max_length = max_length;
+    dna_sequence->from = from;
+    dna_sequence->to = to;
 }
 
 DNASequence** create_population(int* data) {
@@ -125,7 +197,10 @@ DNASequence** create_population(int* data) {
     for (int i = 0; i < POPULATION_SIZE; i++) {
         population_ptr[i] = &population[i];
         init_dna_sequences(population_ptr[i], data);
+        randomize_list(population_ptr[i]);
+        find_max_length_in_sequence(population_ptr[i]);
     }
+    sort_population(population_ptr);
 
     return population_ptr;
 }
@@ -145,7 +220,7 @@ int generate_random_sequence() {
 }
 
 void randomize_sequence(int** data) {
-
+    // TODO: Implement randomization of the sequence.
 }
 
 void insert_seq(int* data, int index) {
@@ -194,12 +269,4 @@ void output_dna_sequence(DNASequence* dna_sequence, int binary) {
             printf("%s\n", convert_sequence_to_string(*dna_sequence->sequences[i]));
         }
     }
-}
-
-/// @brief Compares two sequences and checks whether a series can be created from them. The order of given arguments matters.
-/// @param seq1 First sequence to compare.
-/// @param seq2 Second sequence to compare.
-/// @return 0 if a series can be created from the sequences, 1 otherwise.
-int compare_sequences(int seq1, int seq2) {
-    return (seq1 & letter_deleter) == (seq2 >> SEQ_SIZE);
 }

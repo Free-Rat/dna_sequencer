@@ -10,8 +10,8 @@ void set_letter_deleter() {
         deleter |= 1;
     }
 
-    letter_deleter = ~(deleter << SEQ_SIZE * (CHAIN - 1));
-    letter_size = deleter;
+    old_letter_deleter = ~(deleter << SEQ_SIZE * (CHAIN - 1));
+    young_letter_deleter = deleter;
 }
 
 /// @brief Reads all the sequences from the specifed file, encodes them in binary and stores them in an array.
