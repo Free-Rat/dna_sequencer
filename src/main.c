@@ -20,11 +20,25 @@ int main() {
             find_max_length_in_sequence(population[j]);
         }
         sort_population(population);
-        // TODO Merge lists
-        // TODO Mutate
+		
+        // Merge lists
+		for (int j = 0; j < ELITE_SIZE; j += 2) {
+			recombine_sequences(population[j], population[j + 1]);
+		}
+
+        // Mutate
+		for (int j = 0; j < POPULATION_SIZE; j++) {
+			if (rand() % 100 < (MUTATION_RATE * 100)) {
+		 				mutate_list(population[j]);
+			}
+		}
+
     }
 
-    // TODO Print population[0]->sequences, because it's the best one.
+	sort_population(population);
+
+    // Print population[0]->sequences, because it's the best one.
+	output_dna_sequence(population[0], 0);
 
     free(original_data);
     return 0;
