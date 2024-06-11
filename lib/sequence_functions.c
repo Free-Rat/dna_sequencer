@@ -147,12 +147,28 @@ int normalize_index(int i) {
     return i;
 }
 
-void randomize_list(DNASequence* population) {
+void randomize_list(int** sequences) {
     for (int i = 0; i < PERFECT_SEQUENCE; i++) {
         if (rand() % 2) {
             int move = rand() % (PERFECT_SEQUENCE * 2) - PERFECT_SEQUENCE;
             int index = normalize_index(i + move);
-            swap_int(&population->sequences[i], &population->sequences[index]);
+            swap_int(&sequences[i], &sequences[index]);
+        }
+    }
+}
+
+void swap_int_simple(int* a, int* b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void randomize_list_simple(int* sequences) {
+    for (int i = 0; i < PERFECT_SEQUENCE; i++) {
+        if (rand() % 2) {
+            int move = rand() % (PERFECT_SEQUENCE * 2) - PERFECT_SEQUENCE;
+            int index = normalize_index(i + move);
+            swap_int_simple(&sequences[i], &sequences[index]);
         }
     }
 }
@@ -160,7 +176,6 @@ void randomize_list(DNASequence* population) {
 void find_max_length_in_sequence(DNASequence* dna_sequence) {
     int length = 0;
     int max_length = 0;
-
 
     int potential_from = 0;
     int from = 0;
@@ -197,10 +212,8 @@ DNASequence** create_population(int* data) {
     for (int i = 0; i < POPULATION_SIZE; i++) {
         population_ptr[i] = &population[i];
         init_dna_sequences(population_ptr[i], data);
-        randomize_list(population_ptr[i]);
-        find_max_length_in_sequence(population_ptr[i]);
+        randomize_list(population_ptr[i]->sequences);
     }
-    sort_population(population_ptr);
 
     return population_ptr;
 }
@@ -217,10 +230,6 @@ int* copy_array(int* data, int new_size) {
 int generate_random_sequence() {
     int max_seq_val = (1 << CHAIN * SEQ_SIZE) - 1;
     return rand() % max_seq_val;
-}
-
-void randomize_sequence(int** data) {
-    // TODO: Implement randomization of the sequence.
 }
 
 void insert_seq(int* data, int index) {
@@ -240,6 +249,14 @@ void insert_seq(int* data, int index) {
     data[index] = generated_seq;
 }
 
+void mutate_list(DNASequence* dna_sequence) {
+    
+}
+
+void mutate_population(DNASequence** population) {
+
+}
+
 int* prepare_data(int* data) {
     int* new_data;
     if (NEGATIVE_ERRORS > 0) {
@@ -249,7 +266,7 @@ int* prepare_data(int* data) {
         }
     }
     else if (POSITIVE_ERRORS > 0) {
-        randomize_sequence(&data);
+        randomize_list_simple(data);
         new_data = copy_array(data, PERFECT_SEQUENCE);
         removed_sequences = copy_array(&data[PERFECT_SEQUENCE], POSITIVE_ERRORS);
     }

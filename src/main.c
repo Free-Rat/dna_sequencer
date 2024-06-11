@@ -16,8 +16,8 @@ int main() {
     // Creates the population of DNA words, randomizes them and sorts them by fitness.
     DNASequence** population = create_population(prepared_data);
     for (int i = 0; i < GENERATIONS; i++) {
-        for (int i = 0; i < PERFECT_SEQUENCE; i++) {
-            find_max_length_in_sequence(population[i]);
+        for (int j = 0; j < POPULATION_SIZE; j++) {
+            find_max_length_in_sequence(population[j]);
         }
         sort_population(population);
         // TODO Merge lists
