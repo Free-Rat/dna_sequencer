@@ -163,11 +163,15 @@ void swap_int_simple(int* a, int* b) {
     *b = temp;
 }
 
+int random_swap(int i) {
+    int move = rand() % (PERFECT_SEQUENCE * 2) - PERFECT_SEQUENCE;
+    return normalize_index(i + move);
+}
+
 void randomize_list_simple(int* sequences) {
     for (int i = 0; i < PERFECT_SEQUENCE; i++) {
         if (rand() % 2) {
-            int move = rand() % (PERFECT_SEQUENCE * 2) - PERFECT_SEQUENCE;
-            int index = normalize_index(i + move);
+            int index = random_swap(i);
             swap_int_simple(&sequences[i], &sequences[index]);
         }
     }
@@ -189,9 +193,9 @@ void find_max_length_in_sequence(DNASequence* dna_sequence) {
             if (length > max_length) {
                 max_length = length;
                 from = potential_from;
-                to = i;
+                to = i - 1;
             }
-            potential_from = i + 1;
+            potential_from = i;
             length = 1;
         }
     }
@@ -199,6 +203,11 @@ void find_max_length_in_sequence(DNASequence* dna_sequence) {
     if (length > max_length) {
         max_length = length;
         to = i - 1;
+    }
+
+    if (from == 0 && to == 1) {
+        from = 0;
+        to = 0;
     }
 
     dna_sequence->max_length = max_length;
@@ -250,7 +259,7 @@ void insert_seq(int* data, int index) {
 }
 
 void mutate_list(DNASequence* dna_sequence) {
-    
+
 }
 
 void mutate_population(DNASequence** population) {
@@ -323,10 +332,10 @@ void recombine_sequences(DNASequence* dna_seq1, DNASequence* dna_seq2) {
 
     // Swap the longest subsequences
     for (int i = 0; i < len1; i++) {
-        dna_seq2->sequences[dna_seq2->from + i] = longest_subseq1[i];
+        dna_seq2->sequences[dna_seq1->from + i] = longest_subseq1[i];
     }
     for (int i = 0; i < len2; i++) {
-        dna_seq1->sequences[dna_seq1->from + i] = longest_subseq2[i];
+        dna_seq1->sequences[dna_seq2->from + i] = longest_subseq2[i];
     }
 
     // Fill the rest of the sequences
@@ -341,10 +350,10 @@ void recombine_sequences(DNASequence* dna_seq1, DNASequence* dna_seq2) {
 		}
 		if (!is_in) {
 			if (idx1 == dna_seq2->from) {
-				idx1 += len1 - 1;
+				idx1 += len2;
 			}
-			idx1++;
 			dna_seq1->sequences[idx1] = remaining_seq1[i];
+			idx1++;
 		}
 	}
 
@@ -359,16 +368,17 @@ void recombine_sequences(DNASequence* dna_seq1, DNASequence* dna_seq2) {
 		}
 		if (!is_in) {
 			if (idx2 == dna_seq1->from) {
-				idx2 += len1 - 1;
+				idx2 += len1;
 			}
+			dna_seq2->sequences[idx2] = remaining_seq2[i];
 			idx2++;
-			dna_seq1->sequences[idx2] = remaining_seq2[i];
 		}
 	}
 
-    // Update max_length and from, to fields
-    find_max_length_in_sequence(dna_seq1);
-    find_max_length_in_sequence(dna_seq2);
+    for (int i = 0; i < PERFECT_SEQUENCE; i++) {
+        int a = *dna_seq1->sequences[i];
+        int b = *dna_seq2->sequences[i];
+    }
 
     // Free temporary arrays
     free(longest_subseq1);
