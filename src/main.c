@@ -6,7 +6,7 @@
 #include "../lib/globals.h"
 #include "../lib/sequence_reader.c"
 
-int N = 100;
+#define N 100
 int main_loop() {
     int* original_data = read_sequence(FILE_SOURCE);
     int* prepared_data = prepare_data(original_data);
