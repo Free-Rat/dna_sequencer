@@ -1,13 +1,13 @@
 #define CHAIN 10
 #define PERFECT_SEQUENCE 500
 #define NEGATIVE_ERRORS 0
-#define POSITIVE_ERRORS 200
-#define DATA_SIZE 700
+#define POSITIVE_ERRORS 50
+#define DATA_SIZE 550
 #define POPULATION_SIZE 1000
 #define GENERATIONS 3000
 #define ELITE_SIZE 100
-#define MUTATION_RATE 0.1
-#define FILE_SOURCE "../res/10.500+200"
+#define MUTATION_RATE 0.15
+#define FILE_SOURCE "../res/25.500+50"
 
 #define DEBUG 0
 

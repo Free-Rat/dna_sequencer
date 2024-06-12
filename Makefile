@@ -4,7 +4,7 @@ build:
 	gcc ./src/main.c -o ./build/main
 
 run:
-	cd ./build && main
+	cd ./build && ./main
 
 zig:
 	zig cc ./src/main.c -o ./build/main
