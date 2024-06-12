@@ -4,7 +4,7 @@ build:
 	gcc ./src/main.c -o ./build/main
 
 run:
-	cd ./build && ./main
+	cd ./build && main
 
 zig:
 	zig cc ./src/main.c -o ./build/main
@@ -14,5 +14,5 @@ com_zig:
 	zig cc ./src/main.c -o ./build/main
 
 time:
-	zig cc ./src/main.c -o ./build/main
+	gcc ./src/main.c -o ./build/main
 	cd ./build && time ./main

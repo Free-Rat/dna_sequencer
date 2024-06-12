@@ -228,12 +228,12 @@ DNASequence** create_population(int* data) {
 }
 
 int* copy_array(int* data, int new_size) {
-    int* new_data = malloc(new_size * sizeof(int));
-    for (int i = 0; i < DATA_SIZE; i++) {
-        new_data[i] = data[i];
+    int* new_datax = malloc(new_size * sizeof(int));
+    for (int i = 0; i < new_size; i++) {
+        new_datax[i] = data[i];
     }
 
-    return new_data;
+    return new_datax;
 }
 
 int generate_random_sequence() {

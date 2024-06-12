@@ -6,7 +6,7 @@
 #include "../lib/globals.h"
 #include "../lib/sequence_reader.c"
 
-#define N 100
+#define N 10
 int main_loop() {
     int* original_data = read_sequence(FILE_SOURCE);
     int* prepared_data = prepare_data(original_data);
@@ -54,7 +54,7 @@ int main() {
 		}
 	}
 
-	printf("Average: %d\n", sum / N);
-	printf("Max: %d\n", max);
+	printf("%d\n", sum / N);
+	printf("%d\n", max);
 	return 0;
 }
