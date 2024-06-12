@@ -27,11 +27,7 @@ int main() {
 		}
 
         // Mutate
-		for (int j = 0; j < POPULATION_SIZE; j++) {
-			if (rand() % 100 < (MUTATION_RATE * 100)) {
-		 				mutate_list(population[j]);
-			}
-		}
+        mutate_population(population);
 
     }
 

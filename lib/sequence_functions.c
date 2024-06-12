@@ -259,11 +259,18 @@ void insert_seq(int* data, int index) {
 }
 
 void mutate_list(DNASequence* dna_sequence) {
+    int from = rand() % PERFECT_SEQUENCE;
+    int to = random_swap(from);
 
+    swap_int(&dna_sequence->sequences[from], &dna_sequence->sequences[to]);
 }
 
 void mutate_population(DNASequence** population) {
-
+    for (int i = 0; i < POPULATION_SIZE; i++) {
+        if (rand() % 100 < (MUTATION_RATE * 100)) {
+            mutate_list(population[i]);
+        }
+    }
 }
 
 int* prepare_data(int* data) {
