@@ -1,0 +1,216 @@
+Running program with input file: res/10.500-100
+Average: 4
+Max: 6
+0m16,848s
+Running program with input file: res/10.500+200
+Average: 4
+Max: 7
+0m16,714s
+Running program with input file: res/10.500-200
+Average: 4
+Max: 6
+0m16,658s
+Running program with input file: res/10.500+50
+Average: 4
+Max: 7
+0m16,577s
+Running program with input file: res/113.500-8
+Average: 4
+Max: 6
+0m16,591s
+Running program with input file: res/144.500-12
+Average: 4
+Max: 6
+0m16,356s
+Running program with input file: res/18.200+20
+Average: 4
+Max: 5
+0m16,321s
+Running program with input file: res/18.200-40
+Average: 3
+Max: 5
+0m16,166s
+Running program with input file: res/18.200+80
+Average: 4
+Max: 6
+0m16,147s
+Running program with input file: res/18.200-80
+Average: 4
+Max: 6
+0m16,266s
+Running program with input file: res/20.300+120
+Average: 4
+Max: 6
+0m16,316s
+Running program with input file: res/20.300-120
+Average: 4
+Max: 7
+0m16,419s
+Running program with input file: res/20.300+30
+Average: 3
+Max: 5
+0m16,472s
+Running program with input file: res/20.300-60
+Average: 4
+Max: 6
+0m16,451s
+Running program with input file: res/25.500-100
+Average: 4
+Max: 7
+0m16,500s
+Running program with input file: res/25.500+200
+Average: 4
+Max: 6
+0m16,355s
+Running program with input file: res/25.500-200
+Average: 4
+Max: 6
+0m16,624s
+Running program with input file: res/25.500+50
+Average: 3
+Max: 4
+0m16,276s
+Running program with input file: res/28.500-18
+Average: 4
+Max: 5
+0m16,309s
+Running program with input file: res/34.500-32
+Average: 4
+Max: 5
+0m16,390s
+Running program with input file: res/35.200+20
+Average: 4
+Max: 6
+0m16,473s
+Running program with input file: res/35.200-40
+Average: 4
+Max: 6
+0m16,475s
+Running program with input file: res/35.200+80
+Average: 4
+Max: 6
+0m16,318s
+Running program with input file: res/35.200-80
+Average: 4
+Max: 6
+0m16,310s
+Running program with input file: res/53.500-100
+Average: 4
+Max: 6
+0m16,531s
+Running program with input file: res/53.500+200
+Average: 3
+Max: 5
+0m16,235s
+Running program with input file: res/53.500-200
+Average: 4
+Max: 6
+0m16,706s
+Running program with input file: res/53.500+50
+Average: 4
+Max: 6
+0m16,568s
+Running program with input file: res/55.300+120
+Average: 4
+Max: 6
+0m16,502s
+Running program with input file: res/55.300-120
+Average: 3
+Max: 4
+0m16,349s
+Running program with input file: res/55.300+30
+Average: 4
+Max: 5
+0m16,488s
+Running program with input file: res/55.300-60
+Average: 4
+Max: 6
+0m16,587s
+Running program with input file: res/55.400+160
+Average: 4
+Max: 5
+0m16,632s
+Running program with input file: res/55.400-160
+Average: 4
+Max: 6
+0m16,812s
+Running program with input file: res/55.400+40
+Average: 4
+Max: 5
+0m16,427s
+Running program with input file: res/55.400-80
+Average: 4
+Max: 6
+0m16,964s
+Running program with input file: res/58.300+120
+Average: 4
+Max: 6
+0m16,598s
+Running program with input file: res/58.300-120
+Average: 4
+Max: 7
+0m16,359s
+Running program with input file: res/58.300+30
+Average: 3
+Max: 6
+0m16,315s
+Running program with input file: res/58.300-60
+Average: 4
+Max: 6
+0m16,690s
+Running program with input file: res/59.500-2
+Average: 4
+Max: 5
+0m16,440s
+Running program with input file: res/62.400+160
+Average: 4
+Max: 7
+0m16,795s
+Running program with input file: res/62.400-160
+Average: 4
+Max: 7
+0m16,611s
+Running program with input file: res/62.400+40
+Average: 4
+Max: 6
+0m16,249s
+Running program with input file: res/62.400-80
+Average: 4
+Max: 7
+0m16,471s
+Running program with input file: res/68.400+160
+Average: 3
+Max: 5
+0m16,167s
+Running program with input file: res/68.400-160
+Average: 4
+Max: 7
+0m16,332s
+Running program with input file: res/68.400+40
+Average: 4
+Max: 6
+0m16,377s
+Running program with input file: res/68.400-80
+Average: 4
+Max: 6
+0m16,386s
+Running program with input file: res/9.200+20
+Average: 3
+Max: 5
+0m16,156s
+Running program with input file: res/9.200-40
+Average: 4
+Max: 6
+0m16,228s
+testy.sh: line 50: [: 40test: integer expression expected
+Running program with input file: res/9.200-40test
+Average: 4
+0m16,427s
+Running program with input file: res/9.200+80
+Average: 4
+Max: 7
+0m16,525s
+Running program with input file: res/9.200-80
+Average: 3
+Max: 5
+0m16,418s

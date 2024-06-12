@@ -6,9 +6,10 @@
 #include "../lib/globals.h"
 #include "../lib/sequence_reader.c"
 
-#define N 100
-int main_loop() {
-    int* original_data = read_sequence(FILE_SOURCE);
+#define N 10
+
+int main_loop(char* file_name) {
+    int* original_data = read_sequence(file_name);
     int* prepared_data = prepare_data(original_data);
     // Creates the population of DNA words, randomizes them and sorts them by fitness.
     DNASequence** population = create_population(prepared_data);
@@ -38,12 +39,19 @@ int main_loop() {
 	return population[0]->max_length;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
     srand(time(NULL));
+
+	int file_from_console = 0;
+	if (argc < 2 && DEBUG) {
+		printf("Usage: %s <file_name>\n", argv[0]);
+		file_from_console = 1;
+		return 1;
+	}
 
 	int results[N];
 	for (int i = 0; i < N; i++) {
-		results[i] = main_loop();
+		results[i] = main_loop(file_from_console ? argv[1] : FILE_SOURCE);
 	}
 	int sum = 0;
 	int max = 0;
