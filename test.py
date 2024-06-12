@@ -58,6 +58,7 @@ def writeResult(file_name: str, measured_time: float, programOutput: str):
         res_file.write(f"{file_name},{measured_time},{programOutput}\n")
 
 
+os.system("echo "" > test_results.csv")
 for fileName in fileNames:
     perfect_sequence, negative_errors, positive_errors, data_size = getDataFromFileName(fileName)
     editGlobals(perfect_sequence, negative_errors, positive_errors, data_size, fileName)
@@ -71,4 +72,4 @@ for fileName in fileNames:
     programOutput = programOutput[programOutput.find("\n")+1:]
     programOutput = programOutput.replace("\n", ",")
     writeResult(fileName, measured_time, programOutput)
-    break
+    # break

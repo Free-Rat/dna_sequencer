@@ -299,7 +299,7 @@ void output_dna_sequence(DNASequence* dna_sequence, int binary) {
             printf("%d\n", *dna_sequence->sequences[i]);
         }
         else {
-            printf("%0.3d:  %s\n", i, convert_sequence_to_string(*dna_sequence->sequences[i]));
+            // printf("%0.3d:  %s\n", i, convert_sequence_to_string(*dna_sequence->sequences[i]));
         }
     }
 	if (!binary) {
