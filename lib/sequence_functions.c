@@ -294,12 +294,12 @@ int* prepare_data(int* data) {
 }
 
 void output_dna_sequence(DNASequence* dna_sequence, int binary) {
-    for (int i = 0; i < DATA_SIZE; i++) {
+    for (int i = 0; i < PERFECT_SEQUENCE; i++) {
         if (binary) {
             printf("%d\n", *dna_sequence->sequences[i]);
         }
         else {
-            printf("%s\n", convert_sequence_to_string(*dna_sequence->sequences[i]));
+            printf("%0.3d:  %s\n", i, convert_sequence_to_string(*dna_sequence->sequences[i]));
         }
     }
 	if (!binary) {
