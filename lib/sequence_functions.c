@@ -295,11 +295,25 @@ void output_dna_sequence(DNASequence* dna_sequence, int binary) {
             printf("%s\n", convert_sequence_to_string(*dna_sequence->sequences[i]));
         }
     }
+	if (!binary) {
+		printf("Max length: %d\n", dna_sequence->max_length);
+		printf("From: %d\n", dna_sequence->from);
+		printf("To: %d\n", dna_sequence->to);
+	}
 }
 
 void recombine_sequences(DNASequence* dna_seq1, DNASequence* dna_seq2) {
     int len1 = dna_seq1->max_length;
     int len2 = dna_seq2->max_length;
+
+	// copy original sequences
+	int** original_seq1 = malloc(PERFECT_SEQUENCE * sizeof(int*));
+	int** original_seq2 = malloc(PERFECT_SEQUENCE * sizeof(int*));
+
+	for (int i = 0; i < PERFECT_SEQUENCE; i++) {
+		original_seq1[i] = dna_seq1->sequences[i];
+		original_seq2[i] = dna_seq2->sequences[i];
+	}
 
     // Create temporary arrays to hold the longest subsequences
     int** longest_subseq1 = malloc(len1 * sizeof(int*));
@@ -313,23 +327,6 @@ void recombine_sequences(DNASequence* dna_seq1, DNASequence* dna_seq2) {
         longest_subseq2[i] = dna_seq2->sequences[dna_seq2->from + i];
     }
 
-    // Create arrays to hold the remaining sequences
-    int remaining_size1 = PERFECT_SEQUENCE - len1;
-    int remaining_size2 = PERFECT_SEQUENCE - len2;
-    int** remaining_seq1 = malloc(remaining_size1 * sizeof(int*));
-    int** remaining_seq2 = malloc(remaining_size2 * sizeof(int*));
-
-    // Copy the remaining sequences
-    int idx1 = 0, idx2 = 0;
-    for (int i = 0; i < PERFECT_SEQUENCE; i++) {
-        if (i < dna_seq1->from || i >= dna_seq1->from + len1) {
-            remaining_seq1[idx1++] = dna_seq1->sequences[i];
-        }
-        if (i < dna_seq2->from || i >= dna_seq2->from + len2) {
-            remaining_seq2[idx2++] = dna_seq2->sequences[i];
-        }
-    }
-
     // Swap the longest subsequences
     for (int i = 0; i < len1; i++) {
         dna_seq2->sequences[dna_seq1->from + i] = longest_subseq1[i];
@@ -339,11 +336,11 @@ void recombine_sequences(DNASequence* dna_seq1, DNASequence* dna_seq2) {
     }
 
     // Fill the rest of the sequences
-	idx1 = 0;
-	for (int i = 0; i < PERFECT_SEQUENCE - len2; i++) {
+    int idx1 = 0, idx2 = 0;
+	for (int i = 0; i < PERFECT_SEQUENCE; i++) {
 		int is_in = 0;
 		for (int j = 0; j < len2; j++) {
-			if (remaining_seq1[i] == longest_subseq2[j]) {
+			if (original_seq1[i] == longest_subseq2[j]) {
 				is_in = 1;
 				break;
 			}
@@ -352,16 +349,15 @@ void recombine_sequences(DNASequence* dna_seq1, DNASequence* dna_seq2) {
 			if (idx1 == dna_seq2->from) {
 				idx1 += len2;
 			}
-			dna_seq1->sequences[idx1] = remaining_seq1[i];
+			dna_seq1->sequences[idx1] = original_seq1[i];
 			idx1++;
 		}
 	}
 
-    idx2 = 0;
-	for (int i = 0; i < PERFECT_SEQUENCE - len1; i++) {
+	for (int i = 0; i < PERFECT_SEQUENCE; i++) {
 		int is_in = 0;
 		for (int j = 0; j < len1; j++) {
-			if (remaining_seq2[i] == longest_subseq1[j]) {
+			if (original_seq2[i] == longest_subseq1[j]) {
 				is_in = 1;
 				break;
 			}
@@ -370,7 +366,7 @@ void recombine_sequences(DNASequence* dna_seq1, DNASequence* dna_seq2) {
 			if (idx2 == dna_seq1->from) {
 				idx2 += len1;
 			}
-			dna_seq2->sequences[idx2] = remaining_seq2[i];
+			dna_seq2->sequences[idx2] = original_seq2[i];
 			idx2++;
 		}
 	}
@@ -383,6 +379,6 @@ void recombine_sequences(DNASequence* dna_seq1, DNASequence* dna_seq2) {
     // Free temporary arrays
     free(longest_subseq1);
     free(longest_subseq2);
-    free(remaining_seq1);
-    free(remaining_seq2);
+    free(original_seq1);
+    free(original_seq2);
 }

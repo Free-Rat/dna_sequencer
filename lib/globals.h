@@ -4,9 +4,9 @@
 #define POSITIVE_ERRORS 0
 #define DATA_SIZE 160
 #define POPULATION_SIZE 100
-#define GENERATIONS 1000
+#define GENERATIONS 10000
 #define ELITE_SIZE 10
-#define MUTATION_RATE 0.01
+#define MUTATION_RATE 0.05
 #define FILE_SOURCE "../res/9.200-40test"
 
 #define SEQ_A 0
